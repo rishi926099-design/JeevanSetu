@@ -1,3 +1,16 @@
+<<<<<<< HEAD
+import express from "express";
+
+const app = express();
+
+app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.send("HealthBridge Backend Running...");
+});
+
+export default app;
+=======
 // Import the Express framework
 import express from "express";
 
@@ -16,3 +29,4 @@ app.get("/", (req, res) => {
 
 // Export the app so it can be used in server.js
 export default app;
+>>>>>>> 18731c1e572976ee0c0efff05250075da39d744f
