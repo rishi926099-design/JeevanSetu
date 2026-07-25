@@ -1,0 +1,58 @@
+import mongoose, { trusted } from "mongoose";
+const departmentSchema  = new mongoose.Schema({
+    name:{
+        type:String,
+        required:true,
+        unique:true,
+        maxlength:100,
+        trim:true
+    },
+     description:{
+        type:String,
+         maxlength:100,
+        trim:true
+    },
+    departmentCode:{
+        type:String,
+        required:true,
+        unique:true,
+        uppercase:true,
+        trim:true,
+        maxlength:20
+    },
+    location:{
+        type:String,
+        required:true,
+ },
+      email:{
+    type:String,
+    lowercase:true
+ },
+ headOfDepartment:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User"
+    },
+    contactNumber:{
+        type:String,
+        trim:true
+    },
+    createdAt:{
+        type:String,
+    },
+       
+    status:{
+        type:String,
+        enum:[
+            "Active",
+            "Inactive"
+        ],
+        default:"Active"
+    },
+},
+{
+    timestamps:true
+});
+const Department = mongoose.model(
+    "Department",
+    departmentSchema
+);
