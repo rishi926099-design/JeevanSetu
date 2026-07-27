@@ -1,4 +1,5 @@
 
+
 // Import dotenv package to load environment variables from the .env file
 import dotenv from "dotenv";
 
@@ -30,4 +31,20 @@ connectDB();
 // Start the server and listen for incoming client requests
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+});
+
+import dotenv from "dotenv";
+import app from "./app.js";
+import connectDB from "./config/db.js";
+
+dotenv.config();
+
+// Connect to MongoDB
+connectDB();
+
+const PORT = process.env.PORT || 5000;
+
+// Start Server
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on ${PORT}`);
 });
