@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const { Schema, model } = mongoose;
 
@@ -75,8 +77,8 @@ const userSchema = new Schema(
 
     refreshToken: {
       type: String,
-      select: false,
       default: null,
+      select: false,
     },
 
     failedLoginAttempts: {
@@ -110,7 +112,7 @@ const userSchema = new Schema(
   {
     timestamps: true,
     versionKey: false,
-  },
+  }
 );
 
 /* ============================
@@ -119,7 +121,74 @@ const userSchema = new Schema(
 
 userSchema.index({ role: 1, accountStatus: 1 });
 
-userSchema.index({ profileId: 1, profileType: 1 }, { unique: true });
+userSchema.index(
+  { profileId: 1, profileType: 1 },
+  { unique: true }
+);
+
+/* ============================
+   Password Hashing Middleware
+============================ */
+
+userSchema.pre("save", async function (next) {
+  // Password change nahi hua to hash mat karo
+  if (!this.isModified("password")) {
+    return next();
+  }
+
+  // Password hash karo
+  this.password = await bcrypt.hash(this.password, 10);
+
+  next();
+});
+
+/* ============================
+   Compare Password
+============================ */
+
+userSchema.methods.isPasswordCorrect = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
+
+/* ============================
+   Generate Access Token
+============================ */
+
+userSchema.methods.generateAccessToken = function () {
+  return jwt.sign(
+    {
+      _id: this._id,
+      email: this.email,
+      role: this.role,
+      profileId: this.profileId,
+      profileType: this.profileType,
+    },
+    process.env.ACCESS_TOKEN_SECRET,
+    {
+      expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
+    }
+  );
+};
+
+/* ============================
+   Generate Refresh Token
+============================ */
+
+userSchema.methods.generateRefreshToken = function () {
+  return jwt.sign(
+    {
+      _id: this._id,
+    },
+    process.env.REFRESH_TOKEN_SECRET,
+    {
+      expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
+    }
+  );
+};
+
+/* ============================
+   User Model
+============================ */
 
 const User = model("User", userSchema);
 
