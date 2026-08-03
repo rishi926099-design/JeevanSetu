@@ -53,23 +53,13 @@ const consentSchema = new mongoose.Schema(
 
     accessLevel: {
       type: String,
-      enum: [
-        "Read",
-        "Read & Download",
-        "Full Access",
-      ],
+      enum: ["Read", "Read & Download", "Full Access"],
       default: "Read",
     },
 
     status: {
       type: String,
-      enum: [
-        "Pending",
-        "Approved",
-        "Rejected",
-        "Revoked",
-        "Expired",
-      ],
+      enum: ["Pending", "Approved", "Rejected", "Revoked", "Expired"],
       default: "Pending",
     },
 
@@ -132,7 +122,4 @@ consentSchema.index({
  * Export Model
  */
 
-export const Consent = mongoose.model(
-  "Consent",
-  consentSchema
-);
+export const Consent = mongoose.model("Consent", consentSchema);

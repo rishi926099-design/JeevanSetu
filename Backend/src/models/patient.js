@@ -232,7 +232,7 @@ const patientSchema = new mongoose.Schema(
   {
     timestamps: true,
     versionKey: false,
-  },
+  }
 );
 
 // ======================================================

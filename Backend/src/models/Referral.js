@@ -64,24 +64,13 @@ const referralSchema = new mongoose.Schema(
 
     priority: {
       type: String,
-      enum: [
-        "Low",
-        "Medium",
-        "High",
-        "Emergency",
-      ],
+      enum: ["Low", "Medium", "High", "Emergency"],
       default: "Medium",
     },
 
     referralStatus: {
       type: String,
-      enum: [
-        "Pending",
-        "Accepted",
-        "Rejected",
-        "Completed",
-        "Cancelled",
-      ],
+      enum: ["Pending", "Accepted", "Rejected", "Completed", "Cancelled"],
       default: "Pending",
     },
 
@@ -138,7 +127,4 @@ referralSchema.index({
  * Export Model
  */
 
-export const Referral = mongoose.model(
-  "Referral",
-  referralSchema
-);
+export const Referral = mongoose.model("Referral", referralSchema);

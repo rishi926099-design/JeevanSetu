@@ -25,7 +25,7 @@ const qualificationSchema = new Schema(
       max: new Date().getFullYear() + 10,
     },
   },
-  { _id: false },
+  { _id: false }
 );
 
 const hospitalAssociationSchema = new Schema(
@@ -49,7 +49,7 @@ const hospitalAssociationSchema = new Schema(
       default: "Full-Time",
     },
   },
-  { _id: false },
+  { _id: false }
 );
 
 /* ============================
@@ -246,7 +246,7 @@ const doctorSchema = new Schema(
   {
     timestamps: true,
     versionKey: false,
-  },
+  }
 );
 
 /* ============================

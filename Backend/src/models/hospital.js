@@ -33,7 +33,7 @@ const contactSchema = new Schema(
       default: "",
     },
   },
-  { _id: false },
+  { _id: false }
 );
 
 // Address
@@ -86,7 +86,7 @@ const addressSchema = new Schema(
       match: [/^[0-9]{4,10}$/, "Invalid pincode"],
     },
   },
-  { _id: false },
+  { _id: false }
 );
 
 // Geo Location
@@ -116,7 +116,7 @@ const geoLocationSchema = new Schema(
       default: 0,
     },
   },
-  { _id: false },
+  { _id: false }
 );
 
 // Capacity
@@ -148,7 +148,7 @@ const capacitySchema = new Schema(
       min: 0,
     },
   },
-  { _id: false },
+  { _id: false }
 );
 
 // Working Hours
@@ -166,32 +166,17 @@ const workingHoursSchema = new Schema(
       type: [
         {
           type: String,
-          enum: [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday",
-          ],
+          enum: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
         },
       ],
-      default: [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-      ],
+      default: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
     },
     open24x7: {
       type: Boolean,
       default: false,
     },
   },
-  { _id: false },
+  { _id: false }
 );
 
 // Emergency Services
@@ -214,7 +199,7 @@ const emergencySchema = new Schema(
       default: false,
     },
   },
-  { _id: false },
+  { _id: false }
 );
 
 // AI Features
@@ -241,7 +226,7 @@ const aiFeaturesSchema = new Schema(
       default: true,
     },
   },
-  { _id: false },
+  { _id: false }
 );
 
 // Verification
@@ -266,7 +251,7 @@ const verificationSchema = new Schema(
       default: null,
     },
   },
-  { _id: false },
+  { _id: false }
 );
 
 // Ratings
@@ -284,7 +269,7 @@ const ratingSchema = new Schema(
       min: 0,
     },
   },
-  { _id: false },
+  { _id: false }
 );
 
 // Documents
@@ -311,7 +296,7 @@ const documentsSchema = new Schema(
       default: "",
     },
   },
-  { _id: false },
+  { _id: false }
 );
 
 /* -------------------------------------------------------------------------- */
@@ -501,7 +486,7 @@ const hospitalSchema = new Schema(
   {
     timestamps: true,
     versionKey: false,
-  },
+  }
 );
 
 /* -------------------------------------------------------------------------- */

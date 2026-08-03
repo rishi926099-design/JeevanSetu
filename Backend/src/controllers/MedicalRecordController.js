@@ -1,30 +1,22 @@
-// Import MedicalRecord model
-import { MedicalRecord } from "../models/MedicalRecord.js";
+import asyncHandler from "../utils/asyncHandler.js";
+import ApiError from "../utils/ApiError.js";
+import ApiResponse from "../utils/ApiResponse.js";
+import MedicalRecord from "../models/medicalRecord.model.js";
 
-// ================================
-// Create New Medical Record
-// Purpose:
-// Create a new medical record for a patient
-// ================================
-export const createMedicalRecord = async (req, res) => {
-  try {
-    // Extract request body
-    const data = req.body;
+const createMedicalRecord = asyncHandler(async (req, res) => {});
 
-    // Create record in MongoDB
-    const record = await MedicalRecord.create(data);
+const getAllMedicalRecords = asyncHandler(async (req, res) => {});
 
-    // Return success response
-    return res.status(201).json({
-      success: true,
-      message: "Medical Record created successfully",
-      data: record,
-    });
-  } catch (error) {
-    // Handle server error
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
+const getMedicalRecordById = asyncHandler(async (req, res) => {});
+
+const updateMedicalRecord = asyncHandler(async (req, res) => {});
+
+const deleteMedicalRecord = asyncHandler(async (req, res) => {});
+
+export {
+    createMedicalRecord,
+    getAllMedicalRecords,
+    getMedicalRecordById,
+    updateMedicalRecord,
+    deleteMedicalRecord,
 };

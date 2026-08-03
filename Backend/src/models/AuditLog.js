@@ -107,10 +107,7 @@ const auditLogSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: [
-        "Success",
-        "Failed",
-      ],
+      enum: ["Success", "Failed"],
       default: "Success",
     },
   },
@@ -148,7 +145,4 @@ auditLogSchema.index({
  * Export Model
  */
 
-export const AuditLog = mongoose.model(
-  "AuditLog",
-  auditLogSchema
-);
+export const AuditLog = mongoose.model("AuditLog", auditLogSchema);

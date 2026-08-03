@@ -140,12 +140,7 @@ const prescriptionSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: [
-        "Active",
-        "Completed",
-        "Cancelled",
-        "Expired",
-      ],
+      enum: ["Active", "Completed", "Cancelled", "Expired"],
       default: "Active",
     },
   },
@@ -179,7 +174,4 @@ prescriptionSchema.index({
  * Export Model
  */
 
-export const Prescription = mongoose.model(
-  "Prescription",
-  prescriptionSchema
-);
+export const Prescription = mongoose.model("Prescription", prescriptionSchema);

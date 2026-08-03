@@ -1,4 +1,4 @@
-server.js
+server.js;
 // Import dotenv package to load environment variables from the .env file
 import dotenv from "dotenv";
 

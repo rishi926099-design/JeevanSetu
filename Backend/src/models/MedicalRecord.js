@@ -168,7 +168,4 @@ medicalRecordSchema.index({
   reportType: 1,
 });
 
-export const MedicalRecord = mongoose.model(
-  "MedicalRecord",
-  medicalRecordSchema
-);
+export const MedicalRecord = mongoose.model("MedicalRecord", medicalRecordSchema);
