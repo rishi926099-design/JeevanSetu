@@ -503,8 +503,7 @@ hospitalSchema.index({
 });
 
 // Performance Indexes
-hospitalSchema.index({ hospitalCode: 1 });
-hospitalSchema.index({ registrationNumber: 1 });
+
 hospitalSchema.index({ "address.city": 1, "address.state": 1 });
 hospitalSchema.index({ hospitalType: 1 });
 hospitalSchema.index({ ownership: 1 });

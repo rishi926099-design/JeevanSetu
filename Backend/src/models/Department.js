@@ -1,54 +1,62 @@
-import mongoose, { trusted } from "mongoose";
-const departmentSchema = new mongoose.Schema(
+import mongoose from "mongoose";
+
+const { Schema, model } = mongoose;
+
+const departmentSchema = new Schema(
   {
     name: {
       type: String,
       required: true,
-      unique: true,
-      maxlength: 100,
       trim: true,
-    },
-    description: {
-      type: String,
+      minlength: 2,
       maxlength: 100,
-      trim: true,
     },
-    departmentCode: {
+
+    code: {
       type: String,
       required: true,
       unique: true,
       uppercase: true,
       trim: true,
       maxlength: 20,
-    },
-    location: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      lowercase: true,
-    },
-    headOfDepartment: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-    contactNumber: {
-      type: String,
-      trim: true,
-    },
-    createdAt: {
-      type: String,
+      index: true,
     },
 
-    status: {
+    description: {
       type: String,
-      enum: ["Active", "Inactive"],
-      default: "Active",
+      trim: true,
+      maxlength: 500,
+      default: "",
+    },
+
+    hospital: {
+      type: Schema.Types.ObjectId,
+      ref: "Hospital",
+      required: true,
+      index: true,
+    },
+
+    headOfDepartment: {
+      type: Schema.Types.ObjectId,
+      ref: "Doctor",
+      default: null,
+    },
+
+    isActive: {
+      type: Boolean,
+      default: true,
+      index: true,
     },
   },
   {
     timestamps: true,
+    versionKey: false,
   }
 );
-const Department = mongoose.model("Department", departmentSchema);
+
+departmentSchema.index({ hospital: 1, name: 1 });
+departmentSchema.index({ hospital: 1, code: 1 }, { unique: true });
+
+const Department = model("Department", departmentSchema);
+
+export default Department;

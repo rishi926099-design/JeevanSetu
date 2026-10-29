@@ -1,53 +1,100 @@
 import mongoose from "mongoose";
-const notificationSchema = new mongoose.Schema(
+
+const { Schema, model } = mongoose;
+
+const notificationSchema = new Schema(
   {
     recipient: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-    sender: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
+      index: true,
     },
-    //sub of notification
+
+    type: {
+      type: String,
+      enum: [
+        "Appointment",
+        "Prescription",
+        "Referral",
+        "MedicalRecord",
+        "Consent",
+        "System",
+        "Emergency",
+      ],
+      required: true,
+    },
+
     title: {
       type: String,
       required: true,
       trim: true,
-      maxlength: 100,
+      maxlength: 200,
     },
+
     message: {
       type: String,
       required: true,
       trim: true,
-      maxlength: 400,
+      maxlength: 1000,
     },
-    type: {
+
+    resourceType: {
       type: String,
-      required: true,
       enum: [
         "Appointment",
         "Prescription",
-        "Medical Report",
-        "Payment",
-        "Reminder",
-        "Emergency",
-        "General",
+        "Referral",
+        "MedicalRecord",
+        "Consent",
+        "User",
+        null,
       ],
+      default: null,
     },
+
+    resourceId: {
+      type: Schema.Types.ObjectId,
+      default: null,
+    },
+
+    isRead: {
+      type: Boolean,
+      default: false,
+      index: true,
+    },
+
+    readAt: {
+      type: Date,
+      default: null,
+    },
+
     priority: {
       type: String,
-      enum: ["Low", "Medium", "High"],
+      enum: ["Low", "Medium", "High", "Critical"],
       default: "Medium",
     },
-    //tell that notification belong to which record
-    relatedId: {
-      type: mongoose.Schema.Types.ObjectId,
+
+    expiresAt: {
+      type: Date,
+      default: null,
     },
   },
   {
     timestamps: true,
+    versionKey: false,
   }
 );
-export const Notification = mongoose.model("Notification", notificationSchema);
+
+notificationSchema.index({
+  recipient: 1,
+  isRead: 1,
+  createdAt: -1,
+});
+
+const Notification = model(
+  "Notification",
+  notificationSchema
+);
+
+export default Notification;

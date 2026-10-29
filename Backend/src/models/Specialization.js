@@ -1,45 +1,65 @@
 import mongoose from "mongoose";
-const specializationSchema = new mongoose.Schema(
+
+const { Schema, model } = mongoose;
+
+const specializationSchema = new Schema(
   {
-    //name of medical specialization
     name: {
       type: String,
       required: true,
       trim: true,
-      maxlength: 50,
-      unique: true,
+      minlength: 2,
+      maxlength: 100,
     },
 
-    //detail about specialization
+    code: {
+      type: String,
+      required: true,
+      uppercase: true,
+      trim: true,
+      maxlength: 20,
+      index: true,
+    },
+
     description: {
       type: String,
       trim: true,
-      maxlength: 300,
+      maxlength: 500,
+      default: "",
     },
+
     department: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Department",
       required: true,
       index: true,
     },
-    //control the spcialization is available or not
-    status: {
-      type: String,
-      enum: ["Active", "Inactive"],
-      default: "Active",
-    },
-    createdBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
 
-    isDeleted: {
+    isActive: {
       type: Boolean,
-      default: false,
+      default: true,
+      index: true,
     },
   },
   {
     timestamps: true,
+    versionKey: false,
   }
 );
-const Specialization = mongoose.model("Specialization", specializationSchema);
+
+specializationSchema.index(
+  { department: 1, name: 1 },
+  { unique: true }
+);
+
+specializationSchema.index(
+  { department: 1, code: 1 },
+  { unique: true }
+);
+
+const Specialization = model(
+  "Specialization",
+  specializationSchema
+);
+
+export default Specialization;

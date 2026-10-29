@@ -1,67 +1,64 @@
 import mongoose from "mongoose";
-const emergencycontactSchema = new mongoose.Schema(
+
+const { Schema, model } = mongoose;
+
+const emergencyContactSchema = new Schema(
   {
     patient: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Patient",
       required: true,
       index: true,
     },
-    fullName: {
+
+    name: {
       type: String,
-      trim: true,
       required: true,
+      trim: true,
+      minlength: 2,
+      maxlength: 100,
+    },
+
+    relationship: {
+      type: String,
+      required: true,
+      trim: true,
       maxlength: 50,
     },
-    relation: {
-      type: String,
-      required: true,
-      enum: [
-        "Father",
-        "Mother",
-        "Brother",
-        "Son",
-        "Daughter",
-        "Guardian",
-        "Friend",
-        "Relative",
-        "Other",
-      ],
-    },
-    phoneNumber: {
-      type: String,
-      required: true,
 
+    phone: {
+      type: String,
+      required: true,
       trim: true,
+      maxlength: 20,
     },
-    alternatePhoneNumber: {
+
+    alternatePhone: {
       type: String,
       trim: true,
+      maxlength: 20,
+      default: "",
     },
+
     email: {
       type: String,
       lowercase: true,
       trim: true,
+      match: [
+        /^\S+@\S+\.\S+$/,
+        "Please provide a valid email address",
+      ],
+      default: null,
     },
+
     address: {
       type: String,
       trim: true,
-      maxlength: 100,
-    },
-    city: {
-      type: String,
-      trim: true,
-    },
-    state: {
-      type: String,
-      trim: true,
+      maxlength: 500,
+      default: "",
     },
 
-    country: {
-      type: String,
-      default: "India",
-    },
-    canMakeMedicalDecisions: {
+    isPrimary: {
       type: Boolean,
       default: false,
     },
@@ -73,7 +70,18 @@ const emergencycontactSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    versionKey: false,
   }
 );
 
-export const EmergencyContact = mongoose.model("EmergencyContact", emergencycontactSchema);
+emergencyContactSchema.index({
+  patient: 1,
+  isPrimary: 1,
+});
+
+const EmergencyContact = model(
+  "EmergencyContact",
+  emergencyContactSchema
+);
+
+export default EmergencyContact;

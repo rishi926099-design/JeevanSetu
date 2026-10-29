@@ -1,11 +1,7 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const patientSchema = new mongoose.Schema(
   {
-    // ======================================================
-    // 1. PERSONAL INFORMATION
-    // ======================================================
-
     Name: {
       type: String,
       required: true,
@@ -35,10 +31,6 @@ const patientSchema = new mongoose.Schema(
       default: "Single",
     },
 
-    // ======================================================
-    // 2. CONTACT INFORMATION
-    // ======================================================
-
     email: {
       type: String,
       required: true,
@@ -55,86 +47,32 @@ const patientSchema = new mongoose.Schema(
     },
 
     address: {
-      street: {
-        type: String,
-        trim: true,
-      },
-      city: {
-        type: String,
-        trim: true,
-      },
-      state: {
-        type: String,
-        trim: true,
-      },
+      street: String,
+      city: String,
+      state: String,
       country: {
         type: String,
-        trim: true,
         default: "India",
       },
-      postalCode: {
-        type: String,
-        trim: true,
-      },
+      postalCode: String,
     },
-
-    // ======================================================
-    // 3. EMERGENCY CONTACT
-    // ======================================================
 
     emergencyContact: {
-      name: {
-        type: String,
-        trim: true,
-      },
-
-      relationship: {
-        type: String,
-        trim: true,
-      },
-
-      phone: {
-        type: String,
-        trim: true,
-      },
+      name: String,
+      relationship: String,
+      phone: String,
     },
 
-    // ======================================================
-    // 4. MEDICAL PROFILE
-    // ======================================================
-
-    allergies: [
-      {
-        type: String,
-        trim: true,
-      },
-    ],
-
-    chronicDiseases: [
-      {
-        type: String,
-        trim: true,
-      },
-    ],
-
-    disabilities: [
-      {
-        type: String,
-        trim: true,
-      },
-    ],
+    allergies: [String],
+    chronicDiseases: [String],
+    disabilities: [String],
 
     organDonor: {
       type: Boolean,
       default: false,
     },
 
-    // ======================================================
-    // 5. HEALTH INFORMATION
-    // ======================================================
-
     height: Number,
-
     weight: Number,
 
     smokingStatus: {
@@ -146,10 +84,6 @@ const patientSchema = new mongoose.Schema(
       type: String,
       enum: ["Never", "Occasionally", "Regularly"],
     },
-
-    // ======================================================
-    // 6. IDENTIFICATION
-    // ======================================================
 
     nationalId: {
       type: String,
@@ -163,10 +97,6 @@ const patientSchema = new mongoose.Schema(
       trim: true,
       sparse: true,
     },
-
-    // ======================================================
-    // 7. ACCOUNT STATUS
-    // ======================================================
 
     accountStatus: {
       type: String,
@@ -184,25 +114,10 @@ const patientSchema = new mongoose.Schema(
       default: false,
     },
 
-    // ======================================================
-    // 8. AVATAR
-    // ======================================================
-
     avatar: {
-      url: {
-        type: String,
-        trim: true,
-      },
-
-      publicId: {
-        type: String,
-        trim: true,
-      },
+      url: String,
+      publicId: String,
     },
-
-    // ======================================================
-    // 9. REFERENCES
-    // ======================================================
 
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -211,13 +126,7 @@ const patientSchema = new mongoose.Schema(
       unique: true,
     },
 
-    // ======================================================
-    // 10. METADATA
-    // ======================================================
-
-    lastLogin: {
-      type: Date,
-    },
+    lastLogin: Date,
 
     lastProfileUpdate: {
       type: Date,
@@ -235,18 +144,10 @@ const patientSchema = new mongoose.Schema(
   }
 );
 
-// ======================================================
-// INDEXES
-// ======================================================
-
 patientSchema.index({ email: 1 });
-
 patientSchema.index({ phone: 1 });
-
-patientSchema.index({ nationalId: 1 });
-
 patientSchema.index({ accountStatus: 1 });
 
-patientSchema.index({ firstName: 1, lastName: 1 });
+const Patient = mongoose.model("Patient", patientSchema);
 
-module.exports = mongoose.model("Patient", patientSchema);
+export default Patient;

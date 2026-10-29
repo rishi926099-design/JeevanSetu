@@ -158,17 +158,7 @@ prescriptionSchema.index({
   prescribedDate: -1,
 });
 
-prescriptionSchema.index({
-  doctor: 1,
-});
 
-prescriptionSchema.index({
-  medicalRecord: 1,
-});
-
-prescriptionSchema.index({
-  hospital: 1,
-});
 
 /**
  * Export Model

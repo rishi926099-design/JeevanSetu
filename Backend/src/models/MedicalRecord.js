@@ -160,9 +160,7 @@ medicalRecordSchema.index({
   visitDate: -1,
 });
 
-medicalRecordSchema.index({
-  hospital: 1,
-});
+
 
 medicalRecordSchema.index({
   reportType: 1,
